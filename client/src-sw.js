@@ -25,11 +25,15 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
+// Implement asset caching
 registerRoute(
+  // Match stylesheets, images, and JavaScript files
   ({ request }) => {
-    return request.destination === 'script' ||
+    return (
       request.destination === 'style' ||
-      request.destination === 'image';
+      request.destination === 'script' ||
+      request.destination === 'image'
+    );
   },
   new CacheFirst({
     cacheName: 'assets-cache',
